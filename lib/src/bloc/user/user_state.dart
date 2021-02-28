@@ -11,12 +11,12 @@ class UserState extends Equatable {
 class UserLoading extends UserState {}
 
 class UserLoadSuccess extends UserState {
-  final List<User> user;
+  final User user;
 
-  UserLoadSuccess([this.user = const []]);
+  UserLoadSuccess(this.user);
 
   @override
   List<Object> get props => [User];
 }
 
-class CourseOperationFailure extends UserState {}
+class UserOperationFailure extends UserState {}

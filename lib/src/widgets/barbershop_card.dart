@@ -1,112 +1,114 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:xcut_frontend/src/models/barberShop.dart';
+import 'package:xcut_frontend/src/models/review.dart';
 import 'package:xcut_frontend/src/widgets/rating_star.dart';
 
 class BarberShopCard extends StatelessWidget {
+  final String imageUrl;
+  final String name;
+  // review contains ratings and reviews in a single object
+  final Map<String, dynamic> review;
+  final DateTime createdAt;
+  final String address;
+
+  BarberShopCard(
+      this.imageUrl, this.name, this.review, this.createdAt, this.address);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => {
-        Navigator.pushNamed(context, '/barbershopDetails')
+        Navigator.pushNamed(context, '/barbershopDetails',
+            arguments: BarberShop(
+                image: imageUrl,
+                name: name,
+                createdAt: createdAt,
+                address: address))
       },
       child: Container(
-        height: MediaQuery.of(context).size.height / 1.75,
-        margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade800, width: 0.5),
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5), bottomLeft: Radius.circular(5), bottomRight: Radius.circular(5)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              blurRadius: 5,
-              spreadRadius: 5,
-              offset: Offset(0, 1),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
+          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade800, width: 0.5),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(5),
+                topRight: Radius.circular(5),
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                blurRadius: 5,
+                spreadRadius: 5,
+                offset: Offset(0, 1),
+              ),
+            ],
+          ),
+          child: Column(children: [
             ClipRRect(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5)),
-              child: Image(
-                image: NetworkImage('https://stmedia.stimg.co/ows_d296d5ef-c8dc-4b18-b11b-0721ef8f7027.jpg?fit=crop&crop=faces'),
-                fit: BoxFit.fill,
-              )
-            ),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5), topRight: Radius.circular(5)),
+                child: Image(
+                  image: NetworkImage(imageUrl),
+                  fit: BoxFit.fill,
+                )),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Column(
-                children: [
-                  Container(
-                    height: 40,
-                    child: Text('Kebede\'s Barbershop', 
-                      style: GoogleFonts.poppins(
+              child: Column(children: [
+                Container(
+                  height: 40,
+                  child: Text(
+                    name,
+                    style: GoogleFonts.poppins(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
-                        color: Theme.of(context).primaryColor
-                      ),
-                    ),
+                        color: Theme.of(context).primaryColor),
                   ),
-                  Container(
+                ),
+                Container(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Text('Rating: ',
-                              style: TextStyle(
+                        Text('Rating: ',
+                            style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w300,
-                                color: Colors.grey
-                              ),
-                              overflow: TextOverflow.clip
-                            ),
-                            ratingStar()
-                          ],
-                        ),
-                        Text('Joined: 22 Jan, 2021',
-                          style: TextStyle(
+                                color: Colors.grey),
+                            overflow: TextOverflow.clip),
+                        ratingStar(review)
+                      ],
+                    ),
+                    Text('Joined: ${createdAt.toString().split(' ')[0]}',
+                        style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w300,
-                            color: Colors.grey
-                          ),
-                          overflow: TextOverflow.clip
-                        ),
-                      ],
-                    )
-                  ),
-                  Container(
+                            color: Colors.grey),
+                        overflow: TextOverflow.clip),
+                  ],
+                )),
+                Container(
                     height: 40,
                     child: Row(
                       children: [
                         Icon(Icons.location_pin, color: Colors.grey.shade500),
-                        Text('Century Mall, Addis Ababa',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.grey
-                          ),
-                          overflow: TextOverflow.clip
-                        ),
+                        Text(address,
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.grey),
+                            overflow: TextOverflow.clip),
                       ],
-                    )
-                  )
-                ]
-              ),
+                    ))
+              ]),
             ),
-          ]
-        )
-      ),
+          ])),
     );
   }
 }
 
-Widget ratingStar() {
+Widget ratingStar(review) {
   return Row(
-    children: [
-      RatingStar(),
-      RatingStar(),
-      RatingStar()
-    ],
+    children: [RatingStar(), RatingStar(), RatingStar()],
   );
 }

@@ -11,12 +11,12 @@ class BarberShopState extends Equatable {
 class BarbershopLoading extends BarberShopState {}
 
 class BarbershopLoadSuccess extends BarberShopState {
-  final List<BarberShop> barberShop;
+  final List<BarberShop> barberShops;
 
-  BarbershopLoadSuccess([this.barberShop = const []]);
+  BarbershopLoadSuccess([this.barberShops = const []]);
 
   @override
-  List<Object> get props => [barberShop];
+  List<Object> get props => [barberShops];
 }
 
-class CourseOperationFailure extends BarberShopState {}
+class BarberShopOperationFailure extends BarberShopState {}

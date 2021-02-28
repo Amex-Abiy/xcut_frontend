@@ -6,21 +6,22 @@ import 'package:xcut_frontend/src/models/user.dart';
 class UserRepository {
   UserDataProvider userDataProvider;
 
-  UserRepository({@required this.userDataProvider}) : assert(userDataProvider != null);
+  UserRepository({@required this.userDataProvider})
+      : assert(userDataProvider != null);
 
   createUser(User user) async {
     await userDataProvider.createUser(user);
   }
 
-  loginUser(User user) async{
+  loginUser(User user) async {
     await userDataProvider.loginUser(user);
   }
 
-  deleteProfile() async{
+  deleteProfile() async {
     await userDataProvider.deleteProfile();
   }
 
-  Future<User> getProfile() async{
+  Future<User> getProfile() async {
     return await userDataProvider.getProfile();
   }
 
@@ -44,13 +45,12 @@ class UserRepository {
     await userDataProvider.deleteAppointment(barberShopId);
   }
 
-  Future<List<BarberShop>> addReview(barberShopId, String message, int rating) async {
+  Future<List<BarberShop>> addReview(
+      barberShopId, String message, int rating) async {
     return await userDataProvider.addReview(barberShopId, message, rating);
   }
 
   Future<List<BarberShop>> deleteReview(barberShopId) async {
     return await userDataProvider.deleteReview(barberShopId);
   }
-
-
 }

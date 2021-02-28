@@ -1,21 +1,20 @@
 import 'dart:wasm';
 
-class BarberShop {
+import 'package:xcut_frontend/src/models/review.dart';
 
+class BarberShop {
   final String name;
   final String address;
   final String image;
-  final Map<String, String> rating;
-  final Map<String, String> review;
+  final List<Review> review;
   final List<String> appointments;
-  final Map<String, Float> location;
+  final Map location;
   final DateTime createdAt;
 
   BarberShop({
     this.name,
     this.address,
     this.image,
-    this.rating,
     this.review,
     this.appointments,
     this.location,
@@ -27,11 +26,15 @@ class BarberShop {
       name: json['name'],
       address: json['address'],
       image: json['image'],
-      rating: json['rating'],
-      review: json['review'],
-      appointments: json['appointments'],
+      review: json['review'] != null
+          ? json['review'].map<Review>((e) => Review.fromJSON(e)).toList()
+          : null,
+      appointments: json['appointments'] != null
+          ? List<String>.from(json['appointments'] ?? [])
+          : null,
       location: json['location'],
-      createdAt: json['createdAt']
+      createdAt:
+          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
     );
   }
 }
