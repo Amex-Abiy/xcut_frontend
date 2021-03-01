@@ -22,8 +22,11 @@ class SearchBar extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
               borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 1),
+            ),
           ),
-          ),
+          onChanged: (text) {
+            BlocProvider<BarberShopBloc>.of(context).add(BarberShopSearch(text))
+          }
         ),
       ),
     );

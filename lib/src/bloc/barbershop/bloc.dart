@@ -18,5 +18,14 @@ class BarberShopBloc extends Bloc<BarberShopEvent, BarberShopState> {
           yield BarberShopOperationFailure();
         }
       }
+
+      if(event is BarberShopSearch) {
+        try {
+          final barberShops = await barberShopRepository.searchBarberShop(event.searchValue);
+          yield BarbershopLoadSuccess(barberShops);
+        } catch (error) {
+          yield BarberShopOperationFailure();
+        }
+      }
     }
 }
