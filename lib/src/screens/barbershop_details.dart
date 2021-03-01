@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:xcut_frontend/src/bloc/barbershop/barbershop_event.dart';
+import 'package:xcut_frontend/src/bloc/barbershop/bloc.dart';
+import 'package:xcut_frontend/src/bloc/user/bloc.dart';
+import 'package:xcut_frontend/src/bloc/user/user_event.dart';
 import 'package:xcut_frontend/src/models/barberShop.dart';
 import 'package:xcut_frontend/src/widgets/review.dart';
 
@@ -82,7 +87,10 @@ class BarberShopDetails extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5.0),
                     side: BorderSide(
                         color: Theme.of(context).primaryColor, width: 1.5)),
-                onPressed: () => {Navigator.pushNamed(context, '/')},
+                onPressed: () => {
+                  BlocProvider.of<UserBloc>(context).add(UserSetAppointment(barberShop.id)),
+                  Navigator.pushNamed(context, '/')
+                },
               ),
             ),
           ),

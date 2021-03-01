@@ -3,6 +3,7 @@ import 'dart:wasm';
 import 'package:xcut_frontend/src/models/review.dart';
 
 class BarberShop {
+  final String id;
   final String name;
   final String address;
   final String image;
@@ -12,6 +13,7 @@ class BarberShop {
   final DateTime createdAt;
 
   BarberShop({
+    this.id,
     this.name,
     this.address,
     this.image,
@@ -23,6 +25,7 @@ class BarberShop {
 
   factory BarberShop.fromJSON(Map<String, dynamic> json) {
     return BarberShop(
+      id: json['_id'],
       name: json['name'],
       address: json['address'],
       image: json['image'],

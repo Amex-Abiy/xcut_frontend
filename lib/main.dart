@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
-import 'package:xcut_frontend/src/app.dart';
 import 'package:xcut_frontend/src/bloc/barbershop/barbershop_event.dart';
 import 'package:xcut_frontend/src/bloc/barbershop/bloc.dart';
 import 'package:xcut_frontend/src/bloc/user/bloc.dart';
-import 'package:xcut_frontend/src/bloc/user/user_event.dart';
 import 'package:xcut_frontend/src/bloc_observer.dart';
 import 'package:xcut_frontend/src/data_provider/data_provider.dart';
 import 'package:xcut_frontend/src/repository/barberShop/barberShop_repository.dart';
 import 'package:xcut_frontend/src/repository/user/user_repository.dart';
 import 'package:xcut_frontend/src/router.dart';
-import 'package:xcut_frontend/src/screens/barbershop_details.dart';
-import 'package:xcut_frontend/src/screens/home.dart';
-import 'package:xcut_frontend/src/screens/signup.dart';
 import 'package:xcut_frontend/src/style/HexColor.dart';
-import 'src/screens/login.dart';
 
 void main() {
   Bloc.observer = BlocObserverClass();

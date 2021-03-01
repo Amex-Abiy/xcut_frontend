@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xcut_frontend/src/app.dart';
 import 'package:xcut_frontend/src/models/barberShop.dart';
 import 'package:xcut_frontend/src/screens/barbershop_details.dart';
+import 'package:xcut_frontend/src/screens/bookmark.dart';
 import 'package:xcut_frontend/src/screens/home.dart';
 import 'package:xcut_frontend/src/screens/login.dart';
 import 'package:xcut_frontend/src/screens/signup.dart';
@@ -22,6 +23,10 @@ class RouterManager {
     if (settings.name == '/barbershopDetails') {
       BarberShop args = settings.arguments;
       return MaterialPageRoute(builder: (context) => BarberShopDetails(args));
+    }
+
+    if(settings.name == '/bookmarks') {
+      return MaterialPageRoute(builder: (context) => BookMark());
     }
 
     if (settings.name == '/login') {
