@@ -3,6 +3,7 @@ import 'package:xcut_frontend/src/app.dart';
 import 'package:xcut_frontend/src/models/barberShop.dart';
 import 'package:xcut_frontend/src/screens/barbershop_details.dart';
 import 'package:xcut_frontend/src/screens/bookmark.dart';
+import 'package:xcut_frontend/src/screens/change_password.dart';
 import 'package:xcut_frontend/src/screens/home.dart';
 import 'package:xcut_frontend/src/screens/login.dart';
 import 'package:xcut_frontend/src/screens/signup.dart';
@@ -25,7 +26,11 @@ class RouterManager {
       return MaterialPageRoute(builder: (context) => BarberShopDetails(args));
     }
 
-    if(settings.name == '/bookmarks') {
+    if (settings.name == '/changePassword') {
+      return MaterialPageRoute(builder: (context) => ChangePassword());
+    }
+
+    if (settings.name == '/bookmarks') {
       return MaterialPageRoute(builder: (context) => BookMark());
     }
 

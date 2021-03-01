@@ -82,7 +82,7 @@ class _ProfileState extends State<Profile> {
                 if (state is UserLoadSuccess) {
                   return Center(
                     child: Text(
-                      state.user.email.toString().split('@')[0],
+                      '@${state.user.email.toString().split('@')[0]}',
                       style:
                           GoogleFonts.poppins(color: Colors.grey, fontSize: 20),
                     ),
@@ -103,7 +103,9 @@ class _ProfileState extends State<Profile> {
                     borderRadius: BorderRadius.circular(5.0),
                     side: BorderSide(
                         color: Theme.of(context).primaryColor, width: 1.5)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/changePassword');
+                },
               ),
             )
           ]);
@@ -118,3 +120,7 @@ logout(BuildContext context) async {
   await TokenHandler.removeToken();
   Navigator.pushNamed(context, '/');
 }
+
+// changePassword(BuildContext context) {
+//   BlocProvider<UserBloc>.of(context).add(UserUpdate())
+// }
