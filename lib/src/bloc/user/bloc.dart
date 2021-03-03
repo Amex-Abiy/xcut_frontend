@@ -5,6 +5,9 @@ import 'package:xcut_frontend/src/bloc/user/user_state.dart';
 import 'package:xcut_frontend/src/models/user.dart';
 import 'package:xcut_frontend/src/repository/user/user_repository.dart';
 
+import 'user_event.dart';
+import 'user_event.dart';
+
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserRepository userRepository;
 
@@ -82,15 +85,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
     }
 
-    // if (event is UserAddReview) {
-    //   try {
-    //     await userRepository.addReview();
-    //     final user = await userRepository.getProfile();
-    //     yield UserLoadSuccess(user);
-    //   } catch (error) {
-    //     yield UserOperationFailure();
-    //   }
-    // }
+    if (event is UserAddReview) {
+      try {
+        await userRepository.addReview(event.barberShopId, event.review, event.rating);
+        final user = await userRepository.getProfile();
+        yield UserLoadSuccess(user);
+      } catch (error) {
+        yield UserOperationFailure();
+      }
+    }
 
     // if (event is UserGetReview) {
     //   try {
@@ -105,6 +108,26 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (event is UserDeleteReview) {
       try {
         await userRepository.deleteReview(event.barberShopId);
+        final user = await userRepository.getProfile();
+        yield UserLoadSuccess(user);
+      } catch (error) {
+        yield UserOperationFailure();
+      }
+    }
+
+     if (event is UserSetAppointment) {
+      try {
+        await userRepository.setAppointment(event.barberShopId);
+        final user = await userRepository.getProfile();
+        yield UserLoadSuccess(user);
+      } catch (error) {
+        yield UserOperationFailure();
+      }
+    }
+
+     if (event is UserDeleteAppointment) {
+      try {
+        await userRepository.deleteAppointment(event.barberShopId);
         final user = await userRepository.getProfile();
         yield UserLoadSuccess(user);
       } catch (error) {

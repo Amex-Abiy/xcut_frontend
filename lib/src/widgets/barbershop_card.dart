@@ -5,6 +5,7 @@ import 'package:xcut_frontend/src/models/review.dart';
 import 'package:xcut_frontend/src/widgets/rating_star.dart';
 
 class BarberShopCard extends StatelessWidget {
+  final String id;
   final String imageUrl;
   final String name;
   // review contains ratings and reviews in a single object
@@ -12,7 +13,7 @@ class BarberShopCard extends StatelessWidget {
   final DateTime createdAt;
   final String address;
 
-  BarberShopCard(
+  BarberShopCard(this.id,
       this.imageUrl, this.name, this.review, this.createdAt, this.address);
   @override
   Widget build(BuildContext context) {
@@ -20,6 +21,7 @@ class BarberShopCard extends StatelessWidget {
       onTap: () => {
         Navigator.pushNamed(context, '/barbershopDetails',
             arguments: BarberShop(
+                id: id,
                 image: imageUrl,
                 name: name,
                 review: review,

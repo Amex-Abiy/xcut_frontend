@@ -9,7 +9,7 @@ class BarberShop {
   final String image;
   final List<Review> review;
   final List<String> appointments;
-  final Map location;
+  final Map<String, dynamic> location;
   final DateTime createdAt;
 
   BarberShop({
@@ -35,7 +35,7 @@ class BarberShop {
       appointments: json['appointments'] != null
           ? List<String>.from(json['appointments'] ?? [])
           : null,
-      location: json['location'],
+      location: json['location'] != null ? json['location'] : {},
       createdAt:
           json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
     );

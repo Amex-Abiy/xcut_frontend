@@ -15,4 +15,8 @@ class BarberShopRepository {
   Future<List<BarberShop>> searchBarberShop(searchValue) async {
     return await barberShopDataProvider.searchBarberShop(searchValue);
   }
+
+  Future<List<BarberShop>> getAppointments() async {
+    return await barberShopDataProvider.getAppointments();
+  }
 }

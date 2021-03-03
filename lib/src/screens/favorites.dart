@@ -9,6 +9,9 @@ import 'package:xcut_frontend/src/bloc/user/user_event.dart';
 import 'package:xcut_frontend/src/bloc/user/user_state.dart';
 import 'package:xcut_frontend/src/widgets/loading_widget.dart';
 
+import '../bloc/user/bloc.dart';
+import '../bloc/user/user_event.dart';
+import '../bloc/user/user_event.dart';
 import '../bloc/user/user_event.dart';
 import '../utils/token_handler.dart';
 
@@ -61,7 +64,7 @@ class _FavoriteState extends State<Favorite> {
           return BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
               if (state is UserOperationFailure) {
-                return Text('You have no favorites');
+                return Text('You have no favorites', style: TextStyle(color: Colors.white));
               }
               if (state is UserLoading) {
                 BlocProvider.of<UserBloc>(context).add(UserGetFavorite());
@@ -70,7 +73,7 @@ class _FavoriteState extends State<Favorite> {
                 return ListView.builder(
                   itemCount: state.user.favorites.length,
                   itemBuilder: (context, index) {
-                    return tile('state.user.favorites[index]');
+                    return tile(context, state.user.favorites[index]);
                   },
                 );
               }
@@ -81,16 +84,20 @@ class _FavoriteState extends State<Favorite> {
   }
 }
 
-Widget tile(name) {
+Widget tile(context, favorites) {
   return ListTile(
     trailing: IconButton(
         icon: Icon(
           Icons.delete,
           color: Colors.grey.shade700,
         ),
-        onPressed: () {}),
+        onPressed: () {
+          // candt delete with name
+          BlocProvider.of<UserBloc>(context).add(UserRemoveFavorite(favorites.id));
+          BlocProvider.of<UserBloc>(context).add(UserLoad());
+        }),
     title: Text(
-      name,
+      favorites.name,
       style:
           GoogleFonts.poppins(color: Colors.grey, fontWeight: FontWeight.w600),
     ),

@@ -9,6 +9,7 @@ import 'package:xcut_frontend/src/utils/token_handler.dart';
 import '../bloc/user/bloc.dart';
 import '../bloc/user/user_event.dart';
 import '../utils/token_handler.dart';
+import '../widgets/toast_msg.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -125,8 +126,8 @@ class _ProfileState extends State<Profile> {
                     side: BorderSide(
                         color: Theme.of(context).primaryColor, width: 1.5)),
                 onPressed: () async {
-                  final userToken = await TokenHandler.getToken();
-                  BlocProvider.of<UserBloc>(context).add(UserDelete(userToken));
+                  BlocProvider.of<UserBloc>(context).add(UserDelete());
+                  ToastMsg.showToast('Account Deleted');
                   Navigator.pushNamed(context, '/');
                 },
               ),

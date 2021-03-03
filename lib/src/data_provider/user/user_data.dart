@@ -6,8 +6,8 @@ import 'package:xcut_frontend/src/models/user.dart';
 import 'package:xcut_frontend/src/utils/token_handler.dart';
 
 class UserDataProvider {
-  final _baseUrlAuth = 'http://localhost:5000/api/auth';
-  final _baseUrlUser = 'http://localhost:5000/api/user';
+  final _baseUrlAuth = 'http://192.168.1.101:5000/api/auth';
+  final _baseUrlUser = 'http://192.168.1.101:5000/api/user';
   final http.Client httpClient;
 
   UserDataProvider({@required this.httpClient}) : assert(httpClient != null);
@@ -50,8 +50,8 @@ class UserDataProvider {
     final body = json.decode(response.body);
     if (body['status']) {
       await TokenHandler.setToken(body['jwt']);
-      await TokenHandler.setUserRole(body['role']);
-      await TokenHandler.setUserId(body['data']['_id']);
+      // await TokenHandler.setUserRole(body['role']);
+      // await TokenHandler.setUserId(body['data']['_id']);
       print(body['jwt']);
     } else {
       throw Exception('Failed to create course.');
@@ -59,11 +59,12 @@ class UserDataProvider {
   }
 
   deleteProfile() async {
+    var token = await TokenHandler.getToken();
     final response = await httpClient.delete(
       '$_baseUrlUser/deleteProfile',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ${TokenHandler.getToken()}'
+        'Authorization': 'Bearer $token'
       },
     );
     final body = json.decode(response.body);
@@ -95,10 +96,11 @@ class UserDataProvider {
 
   // reset password
   Future<User> updateProfile(String oldPassword, String password) async {
+    var token = await TokenHandler.getToken();
     final response = await httpClient.put('$_baseUrlUser/getProfile',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ${TokenHandler.getToken()}'
+          'Authorization': 'Bearer $token'
         },
         body: jsonEncode(<String, dynamic>{
           'oldPassword': oldPassword,
@@ -114,11 +116,12 @@ class UserDataProvider {
   }
 
   addFavorite(barberShopId) async {
+    var token = await TokenHandler.getToken();
     final response = await httpClient.post(
       '$_baseUrlUser/addFavorite/$barberShopId',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ${TokenHandler.getToken()}'
+        'Authorization': 'Bearer $token'
       },
     );
 
@@ -131,11 +134,12 @@ class UserDataProvider {
   }
 
   removeFavorite(barberShopId) async {
+    var token = await TokenHandler.getToken();
     final response = await httpClient.delete(
       '$_baseUrlUser/removeFavorite/$barberShopId',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ${TokenHandler.getToken()}'
+        'Authorization': 'Bearer $token'
       },
     );
 
@@ -148,11 +152,12 @@ class UserDataProvider {
   }
 
   setAppointment(barberShopId) async {
+    var token = await TokenHandler.getToken();
     final response = await httpClient.post(
       '$_baseUrlUser/setAppointment/$barberShopId',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ${TokenHandler.getToken()}'
+        'Authorization': 'Bearer $token'
       },
     );
 
@@ -165,11 +170,12 @@ class UserDataProvider {
   }
 
   deleteAppointment(barberShopId) async {
+    var token = await TokenHandler.getToken();
     final response = await httpClient.delete(
       '$_baseUrlUser/deleteAppointment/$barberShopId',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ${TokenHandler.getToken()}'
+        'Authorization': 'Bearer $token'
       },
     );
 
@@ -182,12 +188,14 @@ class UserDataProvider {
   }
 
   Future<List<BarberShop>> addReview(
-      barberShopId, String message, int rating) async {
+    barberShopId, String message, int rating) async {
+    var token = await TokenHandler.getToken();
     final response = await httpClient.post(
       '$_baseUrlUser/addReview/$barberShopId',
+      // '$_baseUrlUser/addReview/602a2e1ae497c539503573e9',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ${TokenHandler.getToken()}'
+        'Authorization': 'Bearer $token'
       },
       body: jsonEncode(<String, dynamic>{'message': message, 'rating': rating}),
     );
@@ -204,11 +212,12 @@ class UserDataProvider {
   }
 
   Future<List<BarberShop>> deleteReview(barberShopId) async {
-    final response = await httpClient.post(
+    var token = await TokenHandler.getToken();
+    final response = await httpClient.delete(
       '$_baseUrlUser/deleteReview/$barberShopId',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ${TokenHandler.getToken()}'
+        'Authorization': 'Bearer $token'
       },
     );
 

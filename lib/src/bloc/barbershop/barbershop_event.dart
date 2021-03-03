@@ -20,3 +20,11 @@ class BarberShopSearch extends BarberShopEvent {
   @override
   List<Object> get props => [searchValue];
 }
+
+class BarberShopGetUserAppointments extends BarberShopEvent {
+
+  const BarberShopGetUserAppointments();
+
+  @override
+  List<Object> get props => [];
+}

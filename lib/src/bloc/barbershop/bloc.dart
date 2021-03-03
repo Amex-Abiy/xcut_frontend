@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:xcut_frontend/src/bloc/barbershop/barbershop_event.dart';
 import 'package:xcut_frontend/src/bloc/barbershop/barbershop_state.dart';
 import 'package:xcut_frontend/src/repository/barberShop/barberShop_repository.dart';
+import 'barbershop_state.dart';
 
 class BarberShopBloc extends Bloc<BarberShopEvent, BarberShopState> {
     final BarberShopRepository barberShopRepository;
@@ -13,6 +14,7 @@ class BarberShopBloc extends Bloc<BarberShopEvent, BarberShopState> {
       if(event is BarberShopLoad) {
         try {
           final barberShops = await barberShopRepository.getAllBarberShops();
+          print(barberShops);
           yield BarbershopLoadSuccess(barberShops);
         } catch (error) {
           yield BarberShopOperationFailure();
@@ -22,6 +24,15 @@ class BarberShopBloc extends Bloc<BarberShopEvent, BarberShopState> {
       if(event is BarberShopSearch) {
         try {
           final barberShops = await barberShopRepository.searchBarberShop(event.searchValue);
+          yield BarbershopLoadSuccess(barberShops);
+        } catch (error) {
+          yield BarberShopOperationFailure();
+        }
+      } 
+
+      if(event is BarberShopGetUserAppointments) {
+        try {
+          final barberShops = await barberShopRepository.getAppointments();
           yield BarbershopLoadSuccess(barberShops);
         } catch (error) {
           yield BarberShopOperationFailure();

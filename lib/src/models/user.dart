@@ -12,7 +12,7 @@ class User extends Equatable {
     return User(
         email: json['email'],
         password: null,
-        favorites: json['favorites'],
+        favorites: json['favorites'] ? json['favorites'] : json['favorites'],
         createdAt: DateTime.parse(json['createdAt']));
   }
 

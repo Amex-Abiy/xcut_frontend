@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:xcut_frontend/src/models/review.dart';
 import 'package:xcut_frontend/src/models/user.dart';
 
 abstract class UserEvent extends Equatable {
@@ -48,12 +49,11 @@ class UserUpdate extends UserEvent {
 }
 
 class UserDelete extends UserEvent {
-  final String token;
 
-  const UserDelete(this.token);
+  const UserDelete();
 
   @override
-  List<Object> get props => [token];
+  List<Object> get props => [];
 
   @override
   toString() => 'User Deleted';
@@ -93,6 +93,16 @@ class UserSetAppointment extends UserEvent {
   const UserSetAppointment(this.barberShopId);
 }
 
+
+class UserGetAppointments extends UserEvent {
+
+  @override
+  List<Object> get props => [];
+
+  const UserGetAppointments();
+}
+
+
 class UserDeleteAppointment extends UserEvent {
   final String barberShopId;
 
@@ -104,11 +114,13 @@ class UserDeleteAppointment extends UserEvent {
 
 class UserAddReview extends UserEvent {
   final String barberShopId;
+  final String review;
+  final int rating;
 
   @override
   List<Object> get props => [];
 
-  const UserAddReview(this.barberShopId);
+  const UserAddReview(this.barberShopId, this.review, this.rating);
 }
 
 class UserGetReview extends UserEvent {

@@ -67,7 +67,8 @@ class _HomeState extends State<Home> {
               return barberShopError(context);
             }
             if (state is BarbershopLoading) {
-              BlocProvider.of<BarberShopBloc>(context).add(BarberShopLoad());
+              BlocProvider.of<BarberShopBloc>(context)
+                          .add(BarberShopLoad());
             }
             if (state is BarbershopLoadSuccess) {
               final barberShops = state.barberShops;
@@ -92,6 +93,7 @@ Widget renderBarberShops(List<BarberShop> barberShop, context) {
         itemCount: barberShop.length,
         itemBuilder: (context, index) {
           return BarberShopCard(
+            barberShop[index].id,
               barberShop[index].image,
               barberShop[index].name,
               barberShop[index].review,

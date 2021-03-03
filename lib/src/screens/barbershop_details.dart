@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:xcut_frontend/src/bloc/barbershop/barbershop_event.dart';
+import 'package:xcut_frontend/src/bloc/barbershop/bloc.dart';
 import 'package:xcut_frontend/src/bloc/user/bloc.dart';
 import 'package:xcut_frontend/src/bloc/user/user_event.dart';
 import 'package:xcut_frontend/src/models/barberShop.dart';
 import 'package:xcut_frontend/src/widgets/review.dart';
 import '../bloc/user/bloc.dart';
+import '../bloc/user/bloc.dart';
 import '../bloc/user/user_event.dart';
 import '../utils/token_handler.dart';
 import '../widgets/review.dart';
+import '../widgets/toast_msg.dart';
+import '../widgets/toast_msg.dart';
 
 class BarberShopDetails extends StatefulWidget {
   final BarberShop barberShop;
@@ -66,7 +71,14 @@ class _BarberShopDetailsState extends State<BarberShopDetails> {
                             color: Colors.amber.shade500),
                       ),
                       color: Theme.of(context).primaryColorDark,
-                      onPressed: () => {_showDialog(context)})
+                      onPressed: () => {_showDialog(context)}),
+                      IconButton(
+                        icon: Icon(Icons.bookmark, color: Colors.white12), 
+                        onPressed: () => { 
+                          BlocProvider.of<UserBloc>(context).add(UserAddFavorite(widget.barberShop.id)),
+                          ToastMsg.showToast('Added to favorites'),
+                          Navigator.pushNamed(context, '/bookmarks')
+                      },),
                 ],
               ),
             ),
@@ -83,10 +95,11 @@ class _BarberShopDetailsState extends State<BarberShopDetails> {
                 itemCount: widget.barberShop.review.length,
                 itemBuilder: (context, index) {
                   return ReviewCard(
-                      widget.barberShop.review[index].email,
-                      widget.barberShop.review[index].dateTime,
-                      widget.barberShop.review[index].rating,
-                      widget.barberShop.review[index].review);
+                      widget.barberShop.id != null ? widget.barberShop.id  : 1,
+                      widget.barberShop.review[index].email != null ? widget.barberShop.review[index].email  : ' ',
+                      widget.barberShop.review[index].dateTime != null ? widget.barberShop.review[index].dateTime  : ' ',
+                      widget.barberShop.review[index].rating != null ? widget.barberShop.review[index].rating  : 3,
+                      widget.barberShop.review[index].review != null ? widget.barberShop.review[index].review  : ' ');
                 }),
             // reviews(),
           ],
@@ -119,7 +132,8 @@ class _BarberShopDetailsState extends State<BarberShopDetails> {
                     onPressed: () => {
                       BlocProvider.of<UserBloc>(context)
                           .add(UserSetAppointment(widget.barberShop.id)),
-                      Navigator.pushNamed(context, '/')
+                      ToastMsg.showToast('Barbershop bookmarked'),
+                      Navigator.pushNamed(context, '/bookmarks')
                     },
                   ),
                 ),
@@ -173,9 +187,9 @@ class _BarberShopDetailsState extends State<BarberShopDetails> {
                     }
                     return null;
                   },
-                  onSaved: (value) {
+                  onChanged: (value) {
                     setState(() {
-                      this._review['review'] = value;
+                      this._review['review'] = 'sdjknkjnkjnk';
                     });
                   }),
               SizedBox(
@@ -204,9 +218,9 @@ class _BarberShopDetailsState extends State<BarberShopDetails> {
                     }
                     return null;
                   },
-                  onSaved: (value) {
+                  onChanged: (value) {
                     setState(() {
-                      this._review['rating'] = int.parse(value);
+                      this._review['rating'] = 5;
                     });
                   })
             ],
@@ -224,9 +238,12 @@ class _BarberShopDetailsState extends State<BarberShopDetails> {
                   style: GoogleFonts.poppins(
                       color: Theme.of(context).primaryColor)),
               onPressed: () {
+                // BlocProvider.of<B
                 BlocProvider.of<UserBloc>(context)
-                    .add(UserAddReview(widget.barberShop.id));
+                    .add(UserAddReview(widget.barberShop.id, this._review['review'], this._review['rating']));
+                BlocProvider.of<BarberShopBloc>(context).add(BarberShopLoad());
                 Navigator.pop(context);
+                Navigator.pushNamed(context, '/');
               })
         ],
       ),

@@ -5,6 +5,7 @@ import 'package:xcut_frontend/src/screens/barbershop_details.dart';
 import 'package:xcut_frontend/src/screens/bookmark.dart';
 import 'package:xcut_frontend/src/screens/change_password.dart';
 import 'package:xcut_frontend/src/screens/home.dart';
+import 'package:xcut_frontend/src/screens/location_map.dart';
 import 'package:xcut_frontend/src/screens/login.dart';
 import 'package:xcut_frontend/src/screens/signup.dart';
 import 'package:xcut_frontend/src/utils/token_handler.dart';
@@ -34,6 +35,11 @@ class RouterManager {
       return MaterialPageRoute(builder: (context) => BookMark());
     }
 
+    if (settings.name == '/location_map') {
+      LocationMapRoute args = settings.arguments;
+      return MaterialPageRoute(builder: (context) => LocationMap(args.longitude, args.latitude));
+    }
+
     if (settings.name == '/login') {
       return MaterialPageRoute(builder: (context) => Login());
     }
@@ -48,4 +54,10 @@ class RouterManager {
 class BarberShopDetailsRoute {
   final BarberShop barberShop;
   BarberShopDetailsRoute(this.barberShop);
+}
+
+class LocationMapRoute {
+  final String longitude;
+  final String latitude;
+  LocationMapRoute(this.longitude, this.latitude);
 }

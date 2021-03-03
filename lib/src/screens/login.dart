@@ -7,6 +7,7 @@ import 'package:xcut_frontend/src/bloc/user/bloc.dart';
 import 'package:xcut_frontend/src/bloc/user/user_event.dart';
 import 'package:xcut_frontend/src/utils/token_handler.dart';
 import '../models/user.dart';
+import '../widgets/toast_msg.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -138,6 +139,7 @@ class _LoginState extends State<Login> {
                                 password: this._user['password']));
                             print(await TokenHandler.getToken());
                             BlocProvider.of<AuthBloc>(context).add(event);
+                            ToastMsg.showToast('Logged In');
                             Navigator.pushNamed(context, '/');
                           }
                         },
